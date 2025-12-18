@@ -2,51 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>README - Gerenciador de Contas de Jogos</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 30px;
-      line-height: 1.6;
-    }
-    h1, h2, h3 {
-      color: #3b82f6;
-    }
-    ul {
-      margin-left: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-    table, th, td {
-      border: 1px solid #374151;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background: #1f2937;
-      color: #fff;
-    }
-    .highlight {
-      background: #1f2937;
-      padding: 10px;
-      border-radius: 8px;
-      margin: 10px 0;
-    }
-    a {
-      color: #3b82f6;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  
 </head>
 <body>
   <h1>🎮 Gerenciador de Contas de Jogos com Favoritos e Histórico</h1>
