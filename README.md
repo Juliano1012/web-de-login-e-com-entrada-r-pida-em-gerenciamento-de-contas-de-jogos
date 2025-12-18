@@ -15,7 +15,7 @@
       <th>Descrição</th>
     </tr>
     <tr>
-      <td><code>index.html</code></td>
+      <td><code>front_end.html</code></td>
       <td>Página principal com cards dos jogos, botões de acesso, favoritos e tema</td>
     </tr>
     <tr>
