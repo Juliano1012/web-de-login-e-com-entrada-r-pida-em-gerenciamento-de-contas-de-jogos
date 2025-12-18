@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Histórico</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 30px;
+    }
+    h1 { margin-bottom: 20px; }
+    ul li {
+      margin: 10px 0;
+      padding: 10px;
+      background: #1f2937;
+      border-radius: 8px;
+    }
+    a.btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #fff;
+      background: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <a href="front_end.html" class="btn">⬅ Voltar</a>
+  <h1>📜 Histórico de Acessos</h1>
+  <ul id="historyList"></ul>
+
+  <script>
+    const history = JSON.parse(localStorage.getItem('history') || '[]');
+    const list = document.getElementById('historyList');
+    if (history.length === 0) {
+      list.innerHTML = '<li>Nenhuma abertura registrada.</li>';
+    } else {
+      history.reverse().forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.game} — ${new Date(item.time).toLocaleString()}`;
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

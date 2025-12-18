@@ -9,11 +9,15 @@
       background: #0f172a;
       color: #e2e8f0;
       padding: 30px;
+      transition: background 0.3s, color 0.3s;
     }
     h1 { margin-bottom: 20px; }
     .search-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       margin-bottom: 20px;
-      text-align: center;
     }
     .search-box input {
       padding: 10px;
@@ -24,18 +28,36 @@
       background: #1f2937;
       color: #e2e8f0;
     }
+    .toggle-theme, .btn-nav {
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #3b82f6;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      text-decoration: none;
+    }
+    #games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
     .card {
       background: #1f2937;
       padding: 20px;
       border-radius: 10px;
-      margin-bottom: 20px;
       text-align: center;
+      transition: transform 0.2s;
     }
+    .card:hover { transform: scale(1.03); }
     .card img {
       width: 100%;
       max-width: 300px;
       border-radius: 8px;
       margin-bottom: 10px;
+      object-fit: cover;
+      height: 170px;
     }
     .card h2 { margin: 10px 0; }
     .btn {
@@ -47,15 +69,25 @@
       font-weight: bold;
       color: #fff;
       background: #3b82f6;
+      transition: background 0.3s;
+      cursor: pointer;
+      border: none;
     }
+    .btn:hover { background: #2563eb; }
+    .dark { background: #f9fafb; color: #111; }
+    .dark .card { background: #e5e7eb; }
+    .dark .search-box input { background: #fff; color: #111; }
   </style>
 </head>
 <body>
   <h1>Gerenciar contas com um clique</h1>
 
-  <!-- Barra de pesquisa -->
+  <!-- Barra de navegação e pesquisa -->
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Pesquisar jogo..." onkeyup="searchGame()" />
+    <a href="historico.html" class="btn-nav">📜 Histórico</a>
+    <a href="favoritos.html" class="btn-nav">⭐ Favoritos</a>
+    <input type="text" id="searchInput" placeholder="Pesquisar jogo..." />
+    <button class="toggle-theme" id="toggleThemeBtn">🌙/☀️</button>
   </div>
 
   <!-- Cards dos jogos -->
@@ -63,76 +95,96 @@
     <div class="card">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqEJcsyEWxiLe_Fv5dOyYAK1tWOAjjPcMlvg&s" alt="Valorant">
       <h2>Valorant (Riot)</h2>
-      <a class="btn" href="https://playvalorant.com/pt-br/" target="_blank">Abrir Valorant</a>
+      <a class="btn" href="https://playvalorant.com/pt-br/" target="_blank" onclick="addHistory('Valorant')">Abrir Valorant</a>
       <a class="btn" href="https://www.riotgames.com/pt-br" target="_blank">Portal Riot</a>
+      <button class="btn" onclick="addFavorite('Valorant')">⭐ Favoritar</button>
     </div>
 
     <div class="card">
       <img src="https://wallpapers.com/images/hd/league-of-legends-background-o9ymho1kg8vmx6p6.jpg" alt="League of Legends">
       <h2>League of Legends (Riot)</h2>
-      <a class="btn" href="https://www.leagueoflegends.com/pt-br/" target="_blank">Abrir LoL</a>
+      <a class="btn" href="https://www.leagueoflegends.com/pt-br/" target="_blank" onclick="addHistory('League of Legends')">Abrir LoL</a>
       <a class="btn" href="https://www.riotgames.com/pt-br" target="_blank">Portal Riot</a>
+      <button class="btn" onclick="addFavorite('League of Legends')">⭐ Favoritar</button>
     </div>
 
     <div class="card">
       <img src="https://fazendoanossafesta.com.br/wp-content/uploads/2021/12/Adesivo-Capa-de-Caderno-Horizontal-Minecraft.jpg" alt="Minecraft">
       <h2>Minecraft (Microsoft)</h2>
-      <a class="btn" href="https://www.minecraft.net/pt-br/login" target="_blank">Abrir Minecraft</a>
+      <a class="btn" href="https://www.minecraft.net/pt-br/login" target="_blank" onclick="addHistory('Minecraft')">Abrir Minecraft</a>
       <a class="btn" href="https://account.microsoft.com/" target="_blank">Conta Microsoft</a>
+      <button class="btn" onclick="addFavorite('Minecraft')">⭐ Favoritar</button>
     </div>
 
     <div class="card">
       <img src="https://s2-techtudo.glbimg.com/nc_YPmxU6MvKilsIimFWdect8pI=/0x0:2400x1350/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2023/1/1/q88ar8T2WQF2YEGOkKPw/counter-strike-2-ingles.png" alt="Counter-Strike 2">
       <h2>Counter-Strike 2 (Steam)</h2>
-      <a class="btn" href="https://store.steampowered.com/app/730/CounterStrike_2/" target="_blank">Abrir CS2</a>
+      <a class="btn" href="https://store.steampowered.com/app/730/CounterStrike_2/" target="_blank" onclick="addHistory('Counter-Strike 2')">Abrir CS2</a>
       <a class="btn" href="https://store.steampowered.com/login/" target="_blank">Login Steam</a>
+      <button class="btn" onclick="addFavorite('Counter-Strike 2')">⭐ Favoritar</button>
     </div>
 
     <div class="card">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAQC5JXPPhD0JKAh4fT0d5Cu4bWfLobUVcoQ&s" alt="Roblox">
       <h2>Roblox</h2>
-      <a class="btn" href="https://www.roblox.com/pt/login/" target="_blank">Abrir Roblox</a>
+      <a class="btn" href="https://www.roblox.com/pt/login/" target="_blank" onclick="addHistory('Roblox')">Abrir Roblox</a>
       <a class="btn" href="https://www.roblox.com/pt/account/settings" target="_blank">Gerenciar Conta</a>
+      <button class="btn" onclick="addFavorite('Roblox')">⭐ Favoritar</button>
     </div>
 
     <div class="card">
       <img src="https://upload.wikimedia.org/wikipedia/pt/b/bf/Overwatch_logo.jpg" alt="Overwatch 2">
       <h2>Overwatch 2 (Blizzard)</h2>
-      <a class="btn" href="https://overwatch.blizzard.com/pt-br/" target="_blank">Abrir Overwatch</a>
+      <a class="btn" href="https://overwatch.blizzard.com/pt-br/" target="_blank" onclick="addHistory('Overwatch 2')">Abrir Overwatch</a>
       <a class="btn" href="https://account.battle.net/" target="_blank">Login Battle.net</a>
+      <button class="btn" onclick="addFavorite('Overwatch 2')">⭐ Favoritar</button>
     </div>
 
     <div class="card">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5J7WHjZdKtXe24y79P1DPZ-gw4Gk-iyL09w&s" alt="Warzone">
       <h2>Call of Duty: Warzone</h2>
-      <a class="btn" href="https://www.callofduty.com/br/pt/playnow/warzone" target="_blank">Abrir Warzone</a>
-      <a class="btn" href="https://profile.activision.com/" target="_blank">Login Activision</a>
-    </div>
-
-    <div class="card">
-      <img src="https://s2-techtudo.glbimg.com/_ij40kbiL4ujBX10wAxsxOCTKrU=/0x0:695x391/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2021/d/M/a0ISQMQOWQ9ZlgX3LBjw/2014-03-31-worlofwarcraftcapa.jpg" alt="World of Warcraft">
-      <h2>World of Warcraft (Blizzard)</h2>
-      <a class="btn" href="https://worldofwarcraft.blizzard.com/pt-br/" target="_blank">Abrir WoW</a>
-      <a class="btn" href="https://account.battle.net/" target="_blank">Login Battle.net</a>
-    </div>
-
-    <div class="card">
-      <img src="https://recreio.com.br/wp-content/uploads/games/free_fire_logo_novo_capa.jpg" alt="Free Fire">
-      <h2>Free Fire (Garena)</h2>
-      <a class="btn" href="https://ff.garena.com/pt/" target="_blank">Abrir Free Fire</a>
-      <a class="btn" href="https://www.garena.sg/?action=login" target="_blank">Login Garena</a>
+      <a class="btn" href="https://www.callofduty.com/br/pt/playnow/warzone" target="_blank" onclick="addHistory('Warzone')">Abrir Warzone</a>
+      <a class="btn" href="https://www.callofduty.com/br/pt/" target="_blank">Portal CoD</a>
+      <button class="btn" onclick="addFavorite('Warzone')">⭐ Favoritar</button>
     </div>
   </div>
 
   <script>
-    function searchGame() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const cards = document.querySelectorAll("#games .card");
-      cards.forEach(card => {
-        const title = card.querySelector("h2").textContent.toLowerCase();
-        card.style.display = title.includes(input) ? "block" : "none";
-      });
+    function addHistory(game) {
+      let history = JSON.parse(localStorage.getItem("history")) || [];
+      history.push(game);
+      localStorage.setItem("history", JSON.stringify(history));
+      alert(game + " adicionado ao histórico!");
+    }
+  
+    function addFavorite(game) {
+      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      if (!favorites.includes(game)) {
+        favorites.push(game);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        alert(game + " favoritado!");
+      } else {
+        alert(game + " já está nos favoritos!");
+      }
     }
   </script>
-</body>
-</html>
+  
+
+  <script>
+    const toggleBtn = document.getElementById("toggleThemeBtn");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+  </script>
+  
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      document.querySelectorAll("#games .card").forEach(card => {
+        const title = card.querySelector("h2").textContent.toLowerCase();
+        card.style.display = title.includes(query) ? "block" : "none";
+      });
+    });
+  </script>
+  

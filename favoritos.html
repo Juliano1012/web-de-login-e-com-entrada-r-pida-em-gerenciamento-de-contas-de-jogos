@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>⭐ Meus Favoritos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .btn-voltar {
+      background: #3b82f6;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #1f2937;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .game-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <a href="front_end.html" class="btn-voltar">← Voltar</a>
+  <h1>⭐ Meus Favoritos</h1>
+  <ul id="favoritesList"></ul>
+
+  <script>
+    const gameLinks = {
+      "Valorant": "https://playvalorant.com/pt-br/",
+      "League of Legends": "https://www.leagueoflegends.com/pt-br/",
+      "Minecraft": "https://www.minecraft.net/pt-br/login",
+      "Counter-Strike 2": "https://store.steampowered.com/app/730/CounterStrike_2/",
+      "Roblox": "https://www.roblox.com/pt/login/",
+      "Overwatch 2": "https://overwatch.blizzard.com/pt-br/",
+      "Warzone": "https://www.callofduty.com/br/pt/playnow/warzone"
+    };
+
+    function loadFavorites() {
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      const list = document.getElementById("favoritesList");
+      list.innerHTML = "";
+
+      favorites.forEach(game => {
+        const li = document.createElement("li");
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "game-name";
+        nameSpan.textContent = game;
+
+        const actionsDiv = document.createElement("div");
+        actionsDiv.className = "actions";
+
+        const playBtn = document.createElement("button");
+        playBtn.className = "btn";
+        playBtn.textContent = "🎮 Jogar";
+        playBtn.onclick = () => {
+          const url = gameLinks[game];
+          if (url) window.open(url, "_blank");
+          else alert("Link não encontrado para este jogo.");
+        };
+
+        const removeBtn = document.createElement("button");
+        removeBtn.className = "btn";
+        removeBtn.textContent = "🗑️ Remover";
+        removeBtn.onclick = () => {
+          const updated = favorites.filter(item => item !== game);
+          localStorage.setItem("favorites", JSON.stringify(updated));
+          loadFavorites();
+        };
+
+        actionsDiv.appendChild(playBtn);
+        actionsDiv.appendChild(removeBtn);
+
+        li.appendChild(nameSpan);
+        li.appendChild(actionsDiv);
+        list.appendChild(li);
+      });
+    }
+
+    loadFavorites();
+  </script>
+</body>
+</html>
